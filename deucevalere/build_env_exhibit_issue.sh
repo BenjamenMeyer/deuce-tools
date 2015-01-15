@@ -18,8 +18,7 @@ SWIFT_SCRIPT="./tools/swift.py"
 
 AUTH_SERVICE='rackspace'
 
-
-BLOCK_COUNT=20
+BLOCK_COUNT=2
 CACHE_EXPIRATION=3600
 DATA_EXPIRATION=1
 
@@ -474,4 +473,16 @@ if [ "${CREATE_VAULT}" == "${POSITIVE_VALUE}" ]; then
 fi
 
 echo "Running Tests..."
+run_test
+
+echo "Delete Vault"
+delete_vault
+
+echo "Waiting 30 seconds..."
+sleep 30
+
+echo "Create Vault"
+create_vault
+
+echo "Re-Running Tests..."
 run_test
