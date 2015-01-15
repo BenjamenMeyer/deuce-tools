@@ -8,4 +8,5 @@ $ virtualenv -p `which python3` env
 $ bash
 $ source env/bin/activate
 $ pip install deuceclient
+$ pip install deucevalere python-swiftclient
 $ python deuceclient/deuceclient_file_tester.py
