@@ -280,8 +280,14 @@ file_list()
 
 delete_file()
 	{
-	deuceclient --user-config ${USER_DATA} --url ${DEUCE_SERVER} -dc ${DC} --auth-service ${AUTH_SERVICE} files --vault-name ${VAULT_NAME} delete --file-id ${1} 
-	return $?
+	local file_id="${1}"
+	if [ -n "${file_id}" ]; then
+		deuceclient --user-config ${USER_DATA} --url ${DEUCE_SERVER} -dc ${DC} --auth-service ${AUTH_SERVICE} files --vault-name ${VAULT_NAME} delete --file-id ${file_id} 
+		return $?
+	else
+		echo "File ID must be specified"
+		return 1
+	fi
 	}
 
 upload_and_delete_file()
@@ -349,6 +355,7 @@ delete_storage_matching_data()
 	do
 		local storage_block_id=`echo ${SWIFT_OBJECT} | cut -f 1 -d '_'`
 		if [ "${storage_block_id}" == "${block_id}" ]; then
+			echo "		Requesting deletion of storage object ${storage_block_id}..."
 			delete_storage_object "${SWIFT_OBJECT}"
 		fi
 	done
@@ -386,6 +393,7 @@ make_missing_data()
 	local DATA_FILE=tox.ini
 	local SHA1=`sha1sum ${DATA_FILE} | cut -f 1 -d ' '`
 	upload_file ${DATA_FILE}
+	echo "	Deleting storage data matching ${SHA1} for file ${DATA_FILE}..."
 	delete_storage_matching_data "${SHA1}"
 	}
 

@@ -267,8 +267,8 @@ def main():
     vault_object_delete_parser.add_argument('--storage-block-id',
                                             default=None,
                                             required=True,
-                                            help="Vault Storage Block Object '
-                                            'to Delete")
+                                            help="Vault Storage Block Object "
+                                            "to Delete")
     vault_object_delete_parser.set_defaults(func=vault_object_delete)
 
     arguments = arg_parser.parse_args()
